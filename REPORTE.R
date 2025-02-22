@@ -110,14 +110,14 @@ consulta1
 ggplot(claims_by_gen_age_vehb, aes(x = reorder(veh_body, -nclaims_total), 
                                    y = nclaims_total, fill = gender)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Tipo de Vehículos Más Reclamados por Género",
+  labs(title = "Gráfico 2. Tipo de Vehículos Más Reclamados por Género",
        x = "Tipo de Vehículos", y = "Número de Reclamaciones") +
   theme_light() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_fill_manual(values = c("F" = "lightpink2", "M" = "cadetblue")) + 
   theme(plot.title = element_text(family = "serif", face = "bold", size = 15, 
-                                  hjust = 0.5, vjust = 1, lineheight = 1), 
-        plot.title.position = "plot") +
+                                  hjust = 0.6, vjust = 1, lineheight = 1), 
+        plot.title.position = "plot", legend.position = "bottom") +
   guides(fill = guide_legend(title = "Género"))
 
 ######
@@ -154,5 +154,20 @@ ggplot(pol_by_gen, aes(x = Gender, y = Count)) +
                                   hjust = 0.6, vjust = 1, lineheight = 1), 
         plot.title.position = "plot")
 
+#Exposición por tipo de vehículo
+expo_by_vehb <- dataCar %>%
+  group_by(veh_body) %>%
+  summarise(exp_tot = sum(exposure)) %>%
+  arrange(desc(exp_tot))
+head(expo_by_vehb, 5)
+
+ggplot(expo_by_vehb, aes(x = veh_body, y = exp_tot))+ geom_point(color = "plum", size = 2.5)+
+  labs(title = "Gráfio 3. Exposición por Tipo de Vehiculo", 
+       x = "Tipo de Vehículo", y = "Exposición total")+
+  theme_light() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(plot.title = element_text(family = "serif", face = "bold", size = 15, 
+                                  hjust = 0.6, vjust = 1, lineheight = 1), 
+        plot.title.position = "plot", legend.position = "bottom") 
 
 
